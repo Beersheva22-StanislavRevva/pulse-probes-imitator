@@ -10,17 +10,16 @@ import org.springframework.context.annotation.Bean;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import telran.monitoring.dto.PulseProbe;
-import telran.monitoring.service.PulseProbeImitator;
+import telran.monitoring.service.PulseProbesImitator;
 
 @SpringBootApplication
 @RequiredArgsConstructor
 @Slf4j
 public class PulseProbesImitatorApplication {
 private static final long TIMEOUT = 30000;
-final PulseProbeImitator imitator;
-	
+final PulseProbesImitator imitator;
 	public static void main(String[] args) throws InterruptedException {
-		ConfigurableApplicationContext ctx =  SpringApplication.run(PulseProbesImitatorApplication.class, args);
+		ConfigurableApplicationContext ctx = SpringApplication.run(PulseProbesImitatorApplication.class, args);
 		Thread.sleep(TIMEOUT);
 		ctx.close();
 	}
@@ -28,10 +27,9 @@ final PulseProbeImitator imitator;
 	Supplier<PulseProbe> probesSupplier() {
 		return () -> {
 			PulseProbe probe = imitator.nextProbe();
-			log.trace("{}",probe);
+			log.trace("{}", probe);
 			return probe;
 		};
-		
 	}
 
 }
